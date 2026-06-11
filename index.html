@@ -212,7 +212,19 @@
             <h2 class="s-title">Δύο αφορμές.<br>Μία βραδιά.</h2>
             <p class="s-text">Εγώ τελειώνω Entrepreneurship Management στο Deree — 4 χρόνια, άπειροι καφέδες, ένα πτυχίο.<br><br>Η Τένια γιορτάζει τα 25α γενέθλιά της.<br><br>Θέλουμε να το γιορτάσουμε μαζί σου.</p>
         `},
-        // 2 — QUIZ INTRO
+        // 2 — TEAM PICK
+        { type:'content', html:`
+            <div class="s-emoji">💒</div>
+            <div class="s-section-tag">// Πρώτα τα βασικά</div>
+            <h2 class="s-title">Εσύ είσαι<br>του γαμπρού<br>ή της νύφης;</h2>
+            <div style="display:flex;gap:14px;margin-top:28px;width:100%;max-width:340px;">
+                <button onclick="pickTeam('mike')" style="flex:1;padding:22px 12px;background:linear-gradient(135deg,var(--g1),var(--g2));border:none;border-radius:16px;color:white;font-family:\'Space Grotesk\',sans-serif;font-size:17px;font-weight:700;cursor:pointer;">🤵<br>Team Mike</button>
+                <button onclick="pickTeam('tenia')" style="flex:1;padding:22px 12px;background:linear-gradient(135deg,var(--g3),var(--gold));border:none;border-radius:16px;color:white;font-family:\'Space Grotesk\',sans-serif;font-size:17px;font-weight:700;cursor:pointer;">👰<br>Team Tenia</button>
+            </div>
+            <p id="teamResult" style="font-family:\'Space Mono\',monospace;font-size:13px;color:var(--gold);margin-top:20px;min-height:20px;opacity:0;transition:opacity .3s;"></p>
+            <p id="teamHint" style="font-family:\'Space Mono\',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);opacity:0;margin-top:12px;transition:opacity .3s;">Tap για να συνεχίσεις →</p>
+        `},
+        // 3 — QUIZ INTRO
         { type:'content', html:`
             <div class="s-emoji">🧠</div>
             <div class="s-section-tag">// Mini Game</div>
@@ -224,19 +236,19 @@
         { type:'quiz', question:'Πού μεγάλωσα;',
           options:['Αθήνα','Μέτσοβο','Ιωάννινα','Θεσσαλονίκη'],
           correct:1, feedback_yes:'Μέτσοβο represent! 🏔️', feedback_no:'Μέτσοβο! Χωριό 2.000 κατοίκων, Hotel Apollon, ο παππούς.' },
-        // 4 — Q2 (Tenia)
+        // 5 — Q2 (Couple)
+        { type:'quiz', who:'couple', question:'Πότε πιστεύεις ότι θα παντρευτούμε;',
+          options:['Καλοκαίρι \'27','Καλοκαίρι \'30','Ποτέ','Όταν δω Harry Potter'],
+          correct:3, feedback_yes:'Χαχα! Δηλαδή ΠΟΤΕ — δεν πρόκειται να δω HP! 😂', feedback_no:'Εμείς ξέρουμε, εσείς θα μάθετε! 😏' },
+        // 5 — Q3
         { type:'quiz', who:'tenia', question:'Τι δουλειά κάνει η Τένια;',
           options:['Νοσηλεύτρια','Δασκάλα σε δημοτικό','Λογίστρια','Φαρμακοποιός'],
           correct:1, feedback_yes:'Ναι! Δασκάλα — η αγαπημένη κάθε μαθητή. 🍎', feedback_no:'Δασκάλα σε δημοτικό! Μεγαλώνει τα παιδιά της Ελλάδας.' },
-        // 5 — Q3
-        { type:'quiz', question:'Ποιο είναι το αγαπημένο μου φαγητό;',
-          options:['Πίτσα','Σουβλάκι','Κοντοσούβλι','Πίτα Μετσόβου'],
-          correct:2, feedback_yes:'Κοντοσούβλι gang! 🥩', feedback_no:'Κοντοσούβλι. Μη ξεχνάς.' },
         // 6 — Q4
         { type:'quiz', question:'Τι ΔΕΝ έχω κάνει ποτέ στη ζωή μου;',
           options:['Να πάω σε συναυλία','Να δω Harry Potter','Να οδηγήσω μηχανή','Να ταξιδέψω εξωτερικό'],
           correct:1, feedback_yes:'Ναι! Δεν έχω δει Harry Potter. Deal with it. 🧙‍♂️', feedback_no:'Δεν έχω δει HARRY POTTER. Ναι, σοβαρά. Ούτε ένα.' },
-        // 7 — Q5 (Tenia)
+        // 7 — Q5
         { type:'quiz', who:'tenia', question:'Ποια είναι η φράση-μανία της Τένιας;',
           options:['"Άστο, δεν γίνεται"','"Θα σε πάρει και θα σε σηκώσει!"','"Ό,τι πεις"','"Χαλαρά"'],
           correct:1, feedback_yes:'Classic Τένια! Αυτό λέει σε κάθε ευκαιρία. 😂', feedback_no:'"Θα σε πάρει και θα σε σηκώσει!" — αν δεν το έχεις ακούσει, δεν την ξέρεις.' },
@@ -335,9 +347,9 @@
             div.innerHTML = s.html;
         } else if(s.type === 'quiz'){
             const letters = ['A','B','C','D'];
-            const whoLabel = s.who === 'tenia' ? ' · 🎂 Τένια' : ' · 🎓 Mike';
+            const whoLabel = s.who === 'tenia' ? ' · 🎂 Τένια' : s.who === 'couple' ? ' · 💒 Couple' : ' · 🎓 Mike';
             div.innerHTML = `
-                <div class="s-section-tag">// Ερώτηση ${i - 2} από ${quizTotal}${whoLabel}</div>
+                <div class="s-section-tag">// Ερώτηση ${i - 3} από ${quizTotal}${whoLabel}</div>
                 <h2 class="quiz-question">${s.question}</h2>
                 <div class="quiz-options">
                     ${s.options.map((opt,j) => `
@@ -445,6 +457,19 @@
         if(e.key === 'ArrowRight' || e.key === ' ') goTo(current + 1);
         if(e.key === 'ArrowLeft') goTo(current - 1);
     });
+
+    // Team pick
+    window.pickTeam = function(team) {
+        const el = document.getElementById('teamResult');
+        const hint = document.getElementById('teamHint');
+        if(team === 'mike') {
+            el.textContent = 'Σωστή επιλογή. Αλλά η Τένια θα στεναχωρηθεί. 😏';
+        } else {
+            el.textContent = 'Καλή επιλογή! Αλλά εγώ πληρώνω τις πίτσες. Just saying. 😏';
+        }
+        el.style.opacity = '1';
+        if(hint) hint.style.opacity = '.6';
+    };
 
     // Countdown
     function updateCD(){
